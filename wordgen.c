@@ -27,5 +27,5 @@ void main(int argc,char *argv[]){
 			total--;
 		}
 	}
-	//perror("");
+	exit(0);
 }
