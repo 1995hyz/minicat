@@ -5,9 +5,12 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
+#include <signal.h>
 
 int wordListSize=4096;
 char **wordList;
+int match=0;
+void handler();
 
 void main(int argc,char *argv[]){
 	if(argc==0){
@@ -20,9 +23,10 @@ void main(int argc,char *argv[]){
 		int totalLine=0;
 		int n=0;
 		int m=0;
-		int match=0;
+		//int match=0;
 		int i=0;
 		char a=0;
+		signal(SIGPIPE,handler);
 		wordList=(char**) malloc(wordListSize*sizeof(char*)+1); 
 		char *line=NULL;
 		fd=fopen("./words.txt","r");
@@ -69,6 +73,7 @@ void main(int argc,char *argv[]){
 				if(strlen(wordList[j])==strlen(log)){
 					if((strcmp(wordList[j],log))==0){
 						match++;
+						fprintf(stdout,"%s",wordList[j]);
 					}
 				}
 			}
@@ -77,5 +82,11 @@ void main(int argc,char *argv[]){
 		}
 		fprintf(stderr,"Matched %d Word(s)\n",match);
 	}
-	//fprintf(stderr,"Wordsearch is done\n");
+	exit(0);
 }
+
+void handler(){
+	fprintf(stderr,"Matched %d Word(s)\n",match);
+	exit(13);
+}
+	
