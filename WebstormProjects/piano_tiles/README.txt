@@ -1,1 +1,0 @@
-This is a project for ECE-462 Computer Graphics course. The project simulates a game called "Piano Tiles".
